@@ -187,4 +187,10 @@ class Employee:
 
     def reviews(self):
         """Return list of reviews associated with current employee"""
-        pass
+        sql = """
+            SELECT * FROM reviews
+            WHERE employee_id is ?
+        """
+
+        row = CURSOR.execute(sql, (self.id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
